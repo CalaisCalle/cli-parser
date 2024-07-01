@@ -8,7 +8,7 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: All
+AllowShortFunctionsOnASingleLine: InlineOnly
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
@@ -56,11 +56,11 @@ ForEachMacros:
 - Q_FOREACH
 - BOOST_FOREACH
 IncludeCategories:
-- Priority: 2
-  Regex: ^"(llvm|llvm-c|clang|clang-c)/
-- Priority: 3
-  Regex: ^(<|"(gtest|gmock|isl|json)/)
 - Priority: 1
+  Regex: ^"(llvm|llvm-c|clang|clang-c)/
+- Priority: 2
+  Regex: ^(<|"(gtest|gmock|isl|json)/)
+- Priority: 3
   Regex: .*
 IncludeIsMainRegex: (Test)?$
 IndentCaseLabels: false

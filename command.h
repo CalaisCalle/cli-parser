@@ -5,35 +5,42 @@
 #include <functional>
 #include <string>
 
-#include "option.h"
+
 #include "initializer_list"
+#include "option.h"
 
-namespace Calle {
+namespace Calle
+{
 
-    class Command {
-    public:
+    class Command
+    {
+      public:
         Command() = delete;
-        Command(
-            const std::string_view name,
-            std::initializer_list<Option> options = { },
-            std::size_t num_args = 0
-        );
+        Command(const std::string_view name, std::initializer_list<Option> options = {}, std::size_t num_args = 0);
 
-        operator bool() { return m_has_value; }
-        const Option& operator[](std::string_view option);
+        const Option& operator[](std::string_view option) const;
+        // Necessary to disambiguify the operator for the compiler
+        // This avoid template stuff that I REALLY don't want to get into
+        //
+        const Option& operator[](const char* option) const;
 
-        void parse_args(const std::deque<std::string>& tokens);
+        bool operator==(std::string_view cmd) const;
 
-    private:
-        std::string m_command_name { };
+        bool has_value();
+        void parse_args(const std::vector<std::string>& tokens);
+        void check();
+
+        std::string m_command_name {};
+
+      private:
         bool m_has_value { false };
-        
-        std::vector<Option>     m_command_options   { };
-        std::vector<Argument>   m_command_arguments { };
 
-        std::size_t     m_num_arguments { };
+        std::vector<Option>   m_command_options {};
+        std::vector<Argument> m_command_arguments {};
+
+        std::size_t m_num_arguments { 0 };
     };
 
-} // namespace Calle
+}// namespace Calle
 
 #endif
